@@ -1,24 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import { Router, Route, Link, Routes } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+
+import { Footer, Header, Post, Profile, Sidebar } from "./components";
+import { Home, Login, Register, AddPost, SinglePost } from './Pages'
+import './index.scss'
+import { useGetProfileQuery } from './services/authApi';
+import { getProfile } from './redux/slices/authSlice'
+
 
 function App() {
+
+  const dispatch = useDispatch();
+
+	const storedAuthData = localStorage.getItem('token');
+	const userId = localStorage.getItem('current_user_id');
+	const profile = useGetProfileQuery(userId);
+	const { data } = profile;
+  console.log(data)
+
+	useEffect(() => {
+		if (storedAuthData) {
+			dispatch(getProfile({ isLoggedIn: true, data}))
+		}
+	}, [data, profile]);
+
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+
+      <div className="routes">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path='/posts/:id' element={<SinglePost />} />
+          <Route path='/posts/:id/edit' element={<AddPost />} />
+          <Route path="/add-post" element={<AddPost />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </div>
+
+      <Footer />
+    </>
   );
 }
 
