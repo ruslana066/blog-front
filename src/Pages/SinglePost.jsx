@@ -32,7 +32,7 @@ const SinglePost = () => {
             // user={{avatarUrl: {noAvatarImg}, fullName: 'Jon Snow'}}
             userName={postData?.user?.fullName}
             userImg={postData?.user?.imageUrl}
-            imageUrl={`http://localhost:4444${postData?.imageUrl}`}
+            imageUrl={`${process.env.REACT_APP_API_URL}${postData?.imageUrl}`}
             viewsCount={postData?.viewsCount || 0}
           />
           <div className="text-block">{postData?.text}</div>

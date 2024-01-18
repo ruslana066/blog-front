@@ -45,7 +45,7 @@ const Home = () => {
                     key={post._id}
                     id={post?._id}
                     title={post?.title}
-                    imageUrl={post?.imageUrl ? `http://localhost:4444${post?.imageUrl}` : placeImg}
+                    imageUrl={post?.imageUrl ? `${process.env.REACT_APP_API_URL}${post?.imageUrl}` : placeImg}
                     userName={post?.user?.fullName}
                     userImg={post?.user?.image}
                     createdAt={post?.createdAt}

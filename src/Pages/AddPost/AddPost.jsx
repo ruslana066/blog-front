@@ -99,7 +99,7 @@ const AddPost = () => {
             imageUrl && (
               <>
                 <Button variant='contained' color='error' onClick={onClickRemoveImg}>Delete</Button>
-                <img src={`http://localhost:4444${imageUrl}`} alt="" />
+                <img src={`${process.env.REACT_APP_API_URL}${imageUrl}`} alt="" />
               </>
             )
           }
